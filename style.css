@@ -1,0 +1,96 @@
+@font-face {
+    font-family: nyt;
+    src: url(nyt-karnak.ttf);
+  }
+@font-face {
+    font-family: frank;
+    src: url(franklin.ttf);
+  }
+body {
+    background-color: #121213;
+    justify-content: center;
+    align-items: center;
+    height: 100vh; /* Ensure the body takes the full height of the viewport */
+    margin: 0; /* Remove default margin */
+}
+
+.wordContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.wordleContainer {
+    margin-top: 41px;
+}
+.letterContainer {
+    position: relative;
+    align-items: center;
+    justify-content: center;
+    display: flex;
+    color: white;
+    background-color: #121213;
+    border: 2px solid #3A3A3C;
+    font-size: 31px;
+    padding: 29px;
+    margin: 2.5px;
+    font-family: frank, Arial, Helvetica, sans-serif;
+    user-select: none;
+}
+.letter {
+    position: absolute;
+}
+
+.guess {
+    color: #717172;
+}
+
+.lettergreen {
+    cursor: pointer;
+    border: 2px solid #538D4E;
+    background-color: #538D4E;
+}
+.lettergrey {
+    cursor: pointer;
+    border: 2px solid #3A3A3C;
+    background-color: #3A3A3C;
+}
+.letteryellow {
+    cursor: pointer;
+    border: 2px solid #B59F3B;
+    background-color: #B59F3B;
+}
+.title {
+    user-select: none;
+    font: 100 36px nyt, Georgia;
+    color: white;
+    text-align: center; /* Center the text horizontally */
+    padding-top: 12px; /* Adjust the margin-top as needed */
+    padding-bottom: 10px;
+    transform: scale(0.75, 1);
+    margin: 0
+}
+.titlecontainer {
+    border-bottom: 1px solid #3A3A3C;
+}
+.flip1 {
+    animation: flip1 0.25s reverse;
+}
+.flip2 {
+    animation: flip2 0.25s;
+}
+@keyframes flip1 {
+    0% {
+      transform: scale(1, 0);
+    }
+    100% {
+      transform: scale(1, 1);
+    }
+}
+@keyframes flip2 {
+    0% {
+      transform: scale(1, 0);
+    }
+    100% {
+      transform: scale(1, 1);
+    }
+  }
