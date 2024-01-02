@@ -6,6 +6,10 @@
     font-family: frank;
     src: url(franklin.ttf);
   }
+  @font-face {
+    font-family: frnk;
+    src: url(franklin-small.ttf);
+  }
 body {
     background-color: #121213;
     justify-content: center;
@@ -33,6 +37,7 @@ body {
     font-size: 31px;
     padding: 29px;
     margin: 2.5px;
+    margin-bottom: 3.5px;
     font-family: frank, Arial, Helvetica, sans-serif;
     user-select: none;
 }
@@ -60,6 +65,8 @@ body {
     background-color: #B59F3B;
 }
 .title {
+    letter-spacing: 1px;
+    align-self: center;
     user-select: none;
     font: 100 36px nyt, Georgia;
     color: white;
@@ -67,11 +74,80 @@ body {
     padding-top: 12px; /* Adjust the margin-top as needed */
     padding-bottom: 10px;
     transform: scale(0.75, 1);
-    margin: 0
+    margin: 0;
+    
 }
 .titlecontainer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
     border-bottom: 1px solid #3A3A3C;
 }
+.reload {
+    position: absolute;
+    right: 20px;
+    height: 29px;
+    width: 29px;
+    background-image: url("reload.png");
+    background-size: cover;
+}
+.infinity {
+    position: absolute;
+    left: 20px;
+    width: 48px;
+    height: 24px;
+    background-image: url("unlimited.png");
+    background-size: cover;
+}
+.keyboard {
+    user-select: none;
+    font-family: frnk, Arial, Helvetica, sans-serif;
+    color: white;
+    text-align: center;
+    margin-top: 39px; /* Adjust as needed */
+}
+.key {
+    cursor: pointer;
+    text-align: center;
+    border-radius: 4px;
+    justify-content: center;
+    position: relative;
+    display: flex;
+    align-items: center;
+    margin: 3px;
+    font-size: 20px;
+    background-color: #818384;
+    height: 58px;
+    width: 43.59px;
+}
+.keyf {
+    width: 43px
+}
+.bigkey {
+    cursor: pointer;
+    text-align: center;
+    border-radius: 4px;
+    justify-content: center;
+    position: relative;
+    display: flex;
+    align-items: center;
+    margin: 3px;
+    font-size: 12.25px;
+    background-color: #818384;
+    height: 58px;
+    width: 65.41px;
+}
+.keyl {
+    text-align: center;
+    margin-bottom: 6px;
+}
+.row {
+    margin-bottom: 2px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
 .flip1 {
     animation: flip1 0.25s reverse;
 }
