@@ -29,9 +29,9 @@ body {
 }
 .wordleContainer {
     margin: auto;
-    width: 34.715vh;
-    height: 41.38vh;
-    margin-top: 5vh;
+    width: 350px;
+    height: 420px;
+    margin-top: 41px;
 }
 .letterContainer {
     position: relative;
