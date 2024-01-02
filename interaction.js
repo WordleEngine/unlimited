@@ -2,6 +2,8 @@ const letters = "abcdefghijklmnopqrstuvwxyz";
 const all = document.getElementsByClassName("letter");
 let num = 0;
 let line = 1;
+const color = {true: '#538D4E', null:'#B59F3B', false:'#3A3A3C'}
+const key = ["q" ,"w" ,"e" ,"r" ,"t" ,"y" ,"u" ,"i" ,"o" ,"p" ,"a" ,"s" ,"d" ,"f" ,"g" ,"h" ,"j", "k" ,"l" ,"z" ,"x" ,"c" ,"v" ,"b" ,"n" ,"m"]
 const grey = document.getElementsByClassName("letterContainer");
 const solver = new Solver();
 let words = [
@@ -24,11 +26,9 @@ function getWord() {
     solver.reset()
     let truewords = []
     let truecolors = []
-    for (let i =0; i < 6; i++) {
-        if (! words[i].includes(null)) {
-            truewords.push(words[i].join(""))
-            truecolors.push(colors[i])
-        }
+    for (let i =0; i < line-1; i++) {
+        truewords.push(words[i].join(""))
+        truecolors.push(colors[i])
     }
     const filter = words[truewords.length]
     for (let i =0; i < truewords.length; i++) {
@@ -53,6 +53,18 @@ function getWord() {
     if (truel != "" && (! colors.some(subarray => subarray.every((value, index) => value === [true, true, true, true, true][index])))) {
         word = truel.toUpperCase().split("")
     }
+    for (let i=0; i < 26; i++) {
+        keys[i].style.backgroundColor = ''
+    }
+    for (let i=0; i < truewords.length; i++) {
+        for (let j=0; j < truewords[i].length;j++) {
+            if ((keys[key.indexOf(truewords[i][j])].style.backgroundColor)!= 'rgb(83, 141, 78)'){
+                if ((truecolors[i][j] == false && keys[key.indexOf(truewords[i][j])].style.backgroundColor == '')||truecolors[i][j] != false) { 
+                    keys[key.indexOf(truewords[i][j])].style.backgroundColor = color[truecolors[i][j]]
+                }
+            }
+        }
+    }
     return word
 }
 function sleep(ms) {
@@ -60,9 +72,12 @@ function sleep(ms) {
 }
 document.onkeydown = async function (e) {
     e = e || window.event;
-
+    await prosseskey(e.key)
+}
+async function prosseskey(key, e=false) {
     // Check if the pressed key is the backspace key
-    if (e.key === "Backspace" && num != (line-1) * 5) {
+    if (key === "Backspace" && num != (line-1) * 5) {
+        if (e) {e.preventDefault();}
         num -= 1;
         all[num].innerHTML = "";
         words[line-1][num-(line-1)*5] = null
@@ -73,10 +88,10 @@ document.onkeydown = async function (e) {
                 all[((line-1)*5)+j].innerHTML = wordi[j]
             }
         }
-    } else if (letters.includes(e.key) && num <= line * 5) {
+    } else if (letters.includes(key) && num <= line * 5) {
         // Check if the pressed key corresponds to a letter
-        all[num].innerHTML = e.key.toUpperCase();
-        words[line-1][num-(line-1)*5] = e.key
+        all[num].innerHTML = key.toUpperCase();
+        words[line-1][num-(line-1)*5] = key
         all[num].classList.remove("guess")
         // Add the "lettergreen" class
         num++;
@@ -86,7 +101,7 @@ document.onkeydown = async function (e) {
                 all[((line-1)*5)+j].innerHTML = wordi[j]
             }
         }
-    } else if (e.key === "Enter" || e.key === "Tab") {
+    } else if (key === "Enter" || key === "Tab") {
         if (num != line * 5) {
             let word = []
             for (i=0; i<5;i++) {
@@ -95,12 +110,14 @@ document.onkeydown = async function (e) {
             }
             words[line-1] = word
         }
-        e.preventDefault(); // Prevent the default action of the "Enter" key
+        if (e) {e.preventDefault();}
         num=line * 5
         line++;
-        const wordi = getWord()
-        for (let j = 0; j < 5; j++) {
-            all[((line-1)*5)+j].innerHTML = wordi[j]
+        if (line < 6) {
+            const wordi = getWord()
+            for (let j = 0; j < 5; j++) {
+                all[((line-1)*5)+j].innerHTML = wordi[j]
+            }
         }
         for (let i = 0; i < 5; i++) {
             grey[i + (line - 2) * 5].classList.add("flip1");
@@ -110,6 +127,19 @@ document.onkeydown = async function (e) {
         }
     }
 };
+const keys = document.getElementsByClassName('key')
+for (let i=0; i<26; i++) {
+    keys[i].addEventListener("click", function () {
+        prosseskey(key[i])
+    })
+}
+const keyb = document.getElementsByClassName('bigkey')
+large = ["Enter", "Backspace"]
+for (let i=0; i<2; i++) {
+    keyb[i].addEventListener("click", function () {
+        prosseskey(large[i])
+    })
+}
 
 // Add click event listeners to each letter element
 for (let i = 0; i < grey.length; i++) {
@@ -120,10 +150,12 @@ for (let i = 0; i < grey.length; i++) {
                 this.classList.remove('lettergreen');
                 this.classList.add('letteryellow');
                 colors[Math.floor(i/5)][i-Math.floor(i/5)*5] = null
-                const wordi = getWord()
-                for (let j = 0; j < 5; j++) {
-                    if (all[((line-1)*5)+j].classList.contains("guess")) {
-                        all[((line-1)*5)+j].innerHTML = wordi[j]
+                if (line < 6) {
+                    const wordi = getWord()
+                    for (let j = 0; j < 5; j++) {
+                        if (all[((line-1)*5)+j].classList.contains("guess")) {
+                            all[((line-1)*5)+j].innerHTML = wordi[j]
+                        }
                     }
                 }
             } else if (this.classList.contains('togreen')) {
@@ -132,9 +164,12 @@ for (let i = 0; i < grey.length; i++) {
                 this.classList.add('lettergreen');
                 colors[Math.floor(i/5)][i-Math.floor(i/5)*5] = true
                 const wordi = getWord()
-                for (let j = 0; j < 5; j++) {
-                    if (all[((line-1)*5)+j].classList.contains("guess")) {
-                        all[((line-1)*5)+j].innerHTML = wordi[j]
+                if (line < 6) {
+                    const wordi = getWord()
+                    for (let j = 0; j < 5; j++) {
+                        if (all[((line-1)*5)+j].classList.contains("guess")) {
+                            all[((line-1)*5)+j].innerHTML = wordi[j]
+                        }
                     }
                 }
             }else if (this.classList.contains('togrey')) {
@@ -142,30 +177,36 @@ for (let i = 0; i < grey.length; i++) {
                 this.classList.remove('togrey');
                 this.classList.add('lettergrey');
                 colors[Math.floor(i/5)][i-Math.floor(i/5)*5] = false
-                const wordi = getWord()
-                for (let j = 0; j < 5; j++) {
-                    if (all[((line-1)*5)+j].classList.contains("guess")) {
-                        all[((line-1)*5)+j].innerHTML = wordi[j]
+                if (line < 6) {
+                    const wordi = getWord()
+                    for (let j = 0; j < 5; j++) {
+                        if (all[((line-1)*5)+j].classList.contains("guess")) {
+                            all[((line-1)*5)+j].innerHTML = wordi[j]
+                        }
                     }
                 }
             }else if (this.classList.contains('lettergrey')) {
                 this.classList.remove('lettergrey');
                 this.classList.add('letteryellow');
                 colors[Math.floor(i/5)][i-Math.floor(i/5)*5] = null
-                const wordi = getWord()
-                for (let j = 0; j < 5; j++) {
-                    if (all[((line-1)*5)+j].classList.contains("guess")) {
-                        all[((line-1)*5)+j].innerHTML = wordi[j]
+                if (line < 6) {
+                    const wordi = getWord()
+                    for (let j = 0; j < 5; j++) {
+                        if (all[((line-1)*5)+j].classList.contains("guess")) {
+                            all[((line-1)*5)+j].innerHTML = wordi[j]
+                        }
                     }
                 }
             } else if (this.classList.contains('letteryellow')) {
                 this.classList.add('lettergreen');
                 this.classList.remove('letteryellow');
                 colors[Math.floor(i/5)][i-Math.floor(i/5)*5] = true
-                const wordi = getWord()
-                for (let j = 0; j < 5; j++) {
-                    if (all[((line-1)*5)+j].classList.contains("guess")) {
-                        all[((line-1)*5)+j].innerHTML = wordi[j]
+                if (line < 6) {
+                    const wordi = getWord()
+                    for (let j = 0; j < 5; j++) {
+                        if (all[((line-1)*5)+j].classList.contains("guess")) {
+                            all[((line-1)*5)+j].innerHTML = wordi[j]
+                        }
                     }
                 }
             }else if (this.classList.contains('lettergreen')) {
@@ -173,9 +214,12 @@ for (let i = 0; i < grey.length; i++) {
                 this.classList.add('lettergrey');
                 colors[Math.floor(i/5)][i-Math.floor(i/5)*5] = false
                 const wordi = getWord()
-                for (let j = 0; j < 5; j++) {
-                    if (all[((line-1)*5)+j].classList.contains("guess")) {
-                        all[((line-1)*5)+j].innerHTML = wordi[j]
+                if (line < 6) {
+                    const wordi = getWord()
+                    for (let j = 0; j < 5; j++) {
+                        if (all[((line-1)*5)+j].classList.contains("guess")) {
+                            all[((line-1)*5)+j].innerHTML = wordi[j]
+                        }
                     }
                 }
             }else {
@@ -202,3 +246,16 @@ for (let i = 0; i < grey.length; i++) {
         }
     });
 }
+
+const image = document.getElementsByClassName('reload')[0];
+
+image.addEventListener('click', function (event) {
+    event.preventDefault();
+    location.reload();
+});
+const image2 = document.getElementsByClassName('infinity')[0];
+
+image2.addEventListener('click', function (event) {
+    event.preventDefault();
+    window.location.href = 'https://wordleengine.github.io';
+});
