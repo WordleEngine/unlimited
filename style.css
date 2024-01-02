@@ -19,12 +19,19 @@ body {
 }
 
 .wordContainer {
+    margin-left: auto;
+    margin-bottom: 10px;
+    width: 100%;
+    height: 14.525%;
     display: flex;
     justify-content: center;
     align-items: center;
 }
 .wordleContainer {
-    margin-top: 41px;
+    margin: auto;
+    width: 34.715vh;
+    height: 41.38vh;
+    margin-top: 5vh;
 }
 .letterContainer {
     position: relative;
@@ -35,7 +42,8 @@ body {
     background-color: #121213;
     border: 2px solid #3A3A3C;
     font-size: 31px;
-    padding: 29px;
+    width: 20%;
+    height: 100%;
     margin: 2.5px;
     margin-bottom: 3.5px;
     font-family: frank, Arial, Helvetica, sans-serif;
