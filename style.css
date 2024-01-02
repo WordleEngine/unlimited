@@ -20,7 +20,7 @@ body {
 
 .wordContainer {
     margin-left: auto;
-    margin-bottom: 10px;
+    margin-bottom: 9.75px;
     width: 100%;
     height: 14.525%;
     display: flex;
@@ -31,7 +31,8 @@ body {
     margin: auto;
     width: 350px;
     height: 420px;
-    margin-top: 45px;
+    margin-top: 46px;
+    margin-bottom: 40px;
 }
 .letterContainer {
     position: relative;
@@ -112,7 +113,7 @@ body {
     font-family: frnk, Arial, Helvetica, sans-serif;
     color: white;
     text-align: center;
-    margin-top: 39px; /* Adjust as needed */
+    margin: 0; /* Adjust as needed */
 }
 .key {
     cursor: pointer;
