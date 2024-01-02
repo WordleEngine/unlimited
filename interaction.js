@@ -10,8 +10,8 @@ const color = {
 const wordle = document.getElementsByClassName("wordleContainer")[0];
 const bodysize = document.documentElement.clientHeight
 console.log(bodysize)
-wordle.style.height = Math.round((5/26)*bodysize+234+(1/26)) +'px'
-wordle.style.width = (Math.round((5/26)*bodysize+234+(1/26))/6)*5 +'px'
+wordle.style.height = Math.round((5/26)*bodysize+215+(1/26)) +'px'
+wordle.style.width = (Math.round((5/26)*bodysize+215+(1/26))/6)*5 +'px'
 const key = ["q", "w", "e", "r", "t", "y", "u", "i", "o", "p", "a", "s", "d", "f", "g", "h", "j", "k", "l", "z", "x", "c", "v", "b", "n", "m"]
 const grey = document.getElementsByClassName("letterContainer");
 const solver = new Solver();
